@@ -3,10 +3,927 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Postman CSE</title>
+    <title>Postman Customer Success Engineering</title>
+    <meta name="description" content="Customer Success Engineering at Postman - tools, resources, and solutions for enterprise API success.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400&display=swap" rel="stylesheet">
+    <link rel="icon" href="https://www.postman.com/favicon-32x32.png" type="image/png">
+    <style>
+        *, *::before, *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --pm-orange: #FF6C37;
+            --pm-orange-btn: #E0531F;
+            --pm-orange-hover: #FF6C37;
+            --pm-orange-dark: #A12700;
+            --pm-orange-light: #FFF1EB;
+            --pm-orange-10: #FCDECF;
+            --pm-gold: #FFDE83;
+            --pm-amber: #FFAC37;
+            --pm-dark-bg: #140B1E;
+            --pm-dark-purple: #210B30;
+            --pm-purple-accent: #491591;
+            --pm-purple-mid: #822C66;
+            --pm-purple-btn: #E8D6FF;
+            --pm-purple-btn-text: #710EED;
+
+            --pm-text-primary: #212121;
+            --pm-text-secondary: #303030;
+            --pm-text-muted: #707070;
+            --pm-grey-05: #F9F9F9;
+            --pm-grey-10: #F2F2F2;
+            --pm-grey-20: #EDEDED;
+            --pm-grey-30: #E6E6E6;
+            --pm-white: #FFFFFF;
+
+            --pm-font-display: 'Plus Jakarta Sans', 'Inter', system-ui, sans-serif;
+            --pm-font-body: 'Inter', system-ui, sans-serif;
+            --pm-font-mono: 'IBM Plex Mono', 'Courier New', monospace;
+
+            --pm-radius-sm: 5px;
+            --pm-radius-md: 10px;
+            --pm-radius-lg: 20px;
+
+            --pm-transition: 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+            --pm-max-width: 1100px;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        body {
+            font-family: var(--pm-font-body);
+            color: var(--pm-text-primary);
+            background: var(--pm-white);
+            line-height: 1.5;
+        }
+
+        /* ── Navigation ── */
+        .nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            padding: 0 32px;
+            height: 64px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: rgba(20, 11, 30, 0.85);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+            transition: background var(--pm-transition);
+        }
+
+        .nav-logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+            color: var(--pm-white);
+        }
+
+        .nav-logo svg {
+            height: 32px;
+            width: auto;
+        }
+
+        .nav-logo-divider {
+            width: 1px;
+            height: 24px;
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .nav-logo-text {
+            font-family: var(--pm-font-display);
+            font-weight: 700;
+            font-size: 15px;
+            letter-spacing: -0.2px;
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .nav-link {
+            color: rgba(255, 255, 255, 0.75);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            padding: 8px 14px;
+            border-radius: var(--pm-radius-sm);
+            transition: all var(--pm-transition);
+        }
+
+        .nav-link:hover {
+            color: var(--pm-white);
+            background: rgba(255, 255, 255, 0.08);
+        }
+
+        /* ── Hero ── */
+        .hero {
+            background: linear-gradient(9.34deg, #140B1E 0%, #140B1E 70%, #491591 85%, #822C66 92%, #E0531F 100%);
+            padding: 160px 32px 100px;
+            position: relative;
+            overflow: hidden;
+            min-height: 85vh;
+            display: flex;
+            align-items: center;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -200px;
+            right: -150px;
+            width: 600px;
+            height: 600px;
+            background: linear-gradient(180deg, #FF6C37 0%, #FFB400 100%);
+            filter: blur(160px);
+            opacity: 0.15;
+            border-radius: 50%;
+            pointer-events: none;
+        }
+
+        .hero::after {
+            content: '';
+            position: absolute;
+            bottom: -100px;
+            left: -100px;
+            width: 400px;
+            height: 400px;
+            background: #491591;
+            filter: blur(140px);
+            opacity: 0.2;
+            border-radius: 50%;
+            pointer-events: none;
+        }
+
+        .hero-inner {
+            max-width: var(--pm-max-width);
+            margin: 0 auto;
+            width: 100%;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 16px;
+            background: rgba(255, 108, 55, 0.12);
+            border: 1px solid rgba(255, 108, 55, 0.25);
+            border-radius: 9999px;
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--pm-orange);
+            margin-bottom: 28px;
+            letter-spacing: 0.02em;
+        }
+
+        .hero-badge-dot {
+            width: 6px;
+            height: 6px;
+            background: var(--pm-orange);
+            border-radius: 50%;
+            animation: pulse-dot 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse-dot {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.4; }
+        }
+
+        .hero h1 {
+            font-family: var(--pm-font-display);
+            font-size: clamp(2.5rem, 1.5rem + 4vw, 4.5rem);
+            font-weight: 800;
+            line-height: 1.05;
+            letter-spacing: -0.03em;
+            color: var(--pm-white);
+            margin-bottom: 24px;
+            max-width: 800px;
+        }
+
+        .hero h1 .gradient-text {
+            background: linear-gradient(90deg, #FF6C37 0%, #FFDE83 60%, #FFAC37 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero p {
+            font-size: clamp(1rem, 0.9rem + 0.4vw, 1.25rem);
+            color: rgba(255, 255, 255, 0.65);
+            line-height: 1.7;
+            max-width: 580px;
+            margin-bottom: 40px;
+        }
+
+        .hero-actions {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        /* ── Buttons ── */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            font-family: var(--pm-font-body);
+            font-weight: 600;
+            font-size: 16px;
+            letter-spacing: -0.16px;
+            line-height: 24px;
+            padding: 12px 24px;
+            border-radius: var(--pm-radius-sm);
+            border: none;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all var(--pm-transition);
+        }
+
+        .btn-primary {
+            background: var(--pm-orange-btn);
+            color: var(--pm-white);
+        }
+
+        .btn-primary:hover {
+            background: var(--pm-orange-hover);
+            box-shadow: 0 4px 15px rgba(255, 108, 55, 0.45);
+        }
+
+        .btn-gradient {
+            background-image: linear-gradient(90deg, #FF6C37, #FFDE83, #FFAC37, #FF8C37);
+            background-size: 300% 100%;
+            color: #000;
+            box-shadow: 0 4px 15px rgba(255, 108, 55, 0.45);
+        }
+
+        .btn-gradient:hover {
+            background-position: 100% 0;
+            box-shadow: 0 8px 24px rgba(255, 222, 131, 0.4), 0 4px 12px rgba(255, 108, 55, 0.5);
+        }
+
+        .btn-ghost {
+            background: rgba(255, 255, 255, 0.06);
+            color: var(--pm-white);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+        }
+
+        .btn-ghost:hover {
+            background: rgba(255, 255, 255, 0.12);
+            border-color: rgba(255, 255, 255, 0.3);
+        }
+
+        .btn-secondary {
+            background: var(--pm-white);
+            color: var(--pm-text-primary);
+            border: 1px solid var(--pm-grey-30);
+        }
+
+        .btn-secondary:hover {
+            background: var(--pm-text-primary);
+            color: var(--pm-white);
+        }
+
+        .btn-sm {
+            font-size: 14px;
+            padding: 8px 16px;
+        }
+
+        /* ── Sections ── */
+        .section {
+            padding: 100px 32px;
+        }
+
+        .section-inner {
+            max-width: var(--pm-max-width);
+            margin: 0 auto;
+        }
+
+        .section-label {
+            font-size: 13px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: var(--pm-orange);
+            margin-bottom: 12px;
+        }
+
+        .section-title {
+            font-family: var(--pm-font-display);
+            font-size: clamp(1.75rem, 1.2rem + 2vw, 2.75rem);
+            font-weight: 800;
+            letter-spacing: -0.02em;
+            line-height: 1.15;
+            color: var(--pm-text-primary);
+            margin-bottom: 16px;
+        }
+
+        .section-desc {
+            font-size: 1.0625rem;
+            color: var(--pm-text-muted);
+            line-height: 1.7;
+            max-width: 600px;
+            margin-bottom: 48px;
+        }
+
+        /* ── What We Do (cards) ── */
+        .section-dark {
+            background: var(--pm-grey-05);
+        }
+
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .card {
+            background: var(--pm-white);
+            border: 1px solid var(--pm-grey-20);
+            border-radius: var(--pm-radius-md);
+            padding: 36px 32px;
+            transition: all var(--pm-transition);
+            position: relative;
+        }
+
+        .card:hover {
+            border-color: var(--pm-grey-30);
+            box-shadow: 0 4px 24px rgba(0, 0, 0, 0.06);
+            transform: translateY(-2px);
+        }
+
+        .card-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: var(--pm-radius-md);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+            font-size: 22px;
+        }
+
+        .card-icon-orange {
+            background: var(--pm-orange-light);
+            color: var(--pm-orange);
+        }
+
+        .card-icon-purple {
+            background: var(--pm-purple-btn);
+            color: var(--pm-purple-btn-text);
+        }
+
+        .card h3 {
+            font-family: var(--pm-font-display);
+            font-size: 1.25rem;
+            font-weight: 700;
+            letter-spacing: -0.01em;
+            margin-bottom: 10px;
+            color: var(--pm-text-primary);
+        }
+
+        .card p {
+            font-size: 0.9375rem;
+            color: var(--pm-text-muted);
+            line-height: 1.65;
+        }
+
+        /* ── Tools/Projects Section ── */
+        .tools-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 20px;
+        }
+
+        .tool-card {
+            background: var(--pm-dark-bg);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: var(--pm-radius-md);
+            padding: 32px;
+            transition: all var(--pm-transition);
+        }
+
+        .tool-card:hover {
+            border-color: rgba(255, 108, 55, 0.3);
+            box-shadow: 0 4px 24px rgba(255, 108, 55, 0.08);
+        }
+
+        .tool-card-tag {
+            display: inline-block;
+            font-family: var(--pm-font-mono);
+            font-size: 12px;
+            color: var(--pm-orange);
+            background: rgba(255, 108, 55, 0.1);
+            padding: 4px 10px;
+            border-radius: 4px;
+            margin-bottom: 16px;
+        }
+
+        .tool-card h3 {
+            font-family: var(--pm-font-display);
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--pm-white);
+            margin-bottom: 10px;
+        }
+
+        .tool-card p {
+            font-size: 0.9375rem;
+            color: rgba(255, 255, 255, 0.55);
+            line-height: 1.65;
+            margin-bottom: 20px;
+        }
+
+        .tool-card-link {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--pm-orange);
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: gap var(--pm-transition);
+        }
+
+        .tool-card-link:hover {
+            gap: 10px;
+        }
+
+        .tool-card-link svg {
+            width: 16px;
+            height: 16px;
+        }
+
+        .section-tools {
+            background: linear-gradient(170deg, #0D0715 60%, #1A0A2E 100%);
+            color: var(--pm-white);
+        }
+
+        .section-tools .section-label {
+            color: var(--pm-gold);
+        }
+
+        .section-tools .section-title {
+            color: var(--pm-white);
+        }
+
+        .section-tools .section-desc {
+            color: rgba(255, 255, 255, 0.55);
+        }
+
+        /* ── Stats ── */
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 32px;
+            padding: 60px 0;
+        }
+
+        .stat {
+            text-align: center;
+        }
+
+        .stat-value {
+            font-family: var(--pm-font-display);
+            font-size: clamp(2rem, 1.5rem + 2vw, 3.5rem);
+            font-weight: 800;
+            letter-spacing: -0.03em;
+            background: linear-gradient(90deg, #FF6C37, #FFDE83);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            line-height: 1.1;
+        }
+
+        .stat-label {
+            font-size: 0.9375rem;
+            color: rgba(255, 255, 255, 0.5);
+            margin-top: 8px;
+        }
+
+        .section-stats {
+            background: var(--pm-dark-bg);
+        }
+
+        /* ── CTA ── */
+        .cta {
+            background: linear-gradient(306deg, #FF6C37 0%, #3A0F73 18.91%, #2A0852 29.71%, #140B1E 48.62%);
+            padding: 100px 32px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(255, 108, 55, 0.12) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        .cta-inner {
+            max-width: 640px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .cta h2 {
+            font-family: var(--pm-font-display);
+            font-size: clamp(1.75rem, 1.2rem + 2.2vw, 3rem);
+            font-weight: 800;
+            letter-spacing: -0.02em;
+            color: var(--pm-white);
+            margin-bottom: 16px;
+            line-height: 1.1;
+        }
+
+        .cta p {
+            font-size: 1.0625rem;
+            color: rgba(255, 255, 255, 0.6);
+            line-height: 1.7;
+            margin-bottom: 36px;
+        }
+
+        .cta-actions {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        /* ── Footer ── */
+        .footer {
+            background: #0A0510;
+            border-top: 1px solid rgba(255, 255, 255, 0.06);
+            padding: 48px 32px;
+        }
+
+        .footer-inner {
+            max-width: var(--pm-max-width);
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .footer-left {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .footer-logo svg {
+            height: 24px;
+            width: auto;
+            opacity: 0.5;
+        }
+
+        .footer-text {
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.35);
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 24px;
+        }
+
+        .footer-link {
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.4);
+            text-decoration: none;
+            transition: color var(--pm-transition);
+        }
+
+        .footer-link:hover {
+            color: rgba(255, 255, 255, 0.75);
+        }
+
+        /* ── Responsive ── */
+        @media (max-width: 768px) {
+            .nav {
+                padding: 0 20px;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .hero {
+                padding: 130px 20px 80px;
+                min-height: auto;
+            }
+
+            .section {
+                padding: 72px 20px;
+            }
+
+            .cards {
+                grid-template-columns: 1fr;
+            }
+
+            .tools-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .stats {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 24px;
+            }
+
+            .cta {
+                padding: 72px 20px;
+            }
+
+            .footer-inner {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+        }
+
+        /* ── Animations ── */
+        @media (prefers-reduced-motion: no-preference) {
+            .fade-in {
+                opacity: 0;
+                transform: translateY(24px);
+                transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+            }
+
+            .fade-in.visible {
+                opacity: 1;
+                transform: translateY(0);
+            }
+
+            .btn-gradient {
+                transition: background-position 0.4s ease-in-out, box-shadow var(--pm-transition);
+            }
+        }
+    </style>
 </head>
 <body>
-    <h1>Postman Customer Success Engineering</h1>
-    <p>Site coming soon.</p>
+
+<!-- Navigation -->
+<nav class="nav">
+    <a href="/" class="nav-logo">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="none">
+            <g>
+                <path d="M182.1 73.9L141.4 114.6L155.5 128.7L210.5 73.7L182.1 73.9Z" fill="#FF6C37"/>
+                <path d="M141.1 115L108.1 82L98.5 91.6L128 121.1L141.1 115Z" fill="white"/>
+                <path d="M128 121.4L97.5 92.3L63.8 126L91.8 153.9L128 121.4Z" fill="white"/>
+                <path d="M91.2 154.6L62.6 126L45.5 143.1L73.7 171.3L91.2 154.6Z" fill="white"/>
+                <path d="M73.1 171.9L44.8 143.7L32.5 156L60.7 184.2L73.1 171.9Z" fill="white"/>
+                <path d="M182.4 73.5L128.1 0L108.4 81.6L182.4 73.5Z" fill="white"/>
+                <path d="M210.9 73.3L256 0L182.8 73.5L210.9 73.3Z" fill="#FF6C37"/>
+                <path d="M155.8 129.1L180.4 153.7L256 0L210.8 73.7L155.8 129.1Z" fill="white"/>
+                <path d="M180 154.4L155.4 129.8L128 256L180 154.4Z" fill="#FF6C37"/>
+            </g>
+        </svg>
+        <span class="nav-logo-divider"></span>
+        <span class="nav-logo-text">Customer Success Engineering</span>
+    </a>
+    <div class="nav-links">
+        <a href="#what-we-do" class="nav-link">What We Do</a>
+        <a href="#projects" class="nav-link">Projects</a>
+        <a href="https://github.com/postman-cs" class="nav-link" target="_blank" rel="noopener">GitHub</a>
+    </div>
+</nav>
+
+<!-- Hero -->
+<section class="hero">
+    <div class="hero-inner">
+        <div class="hero-badge">
+            <span class="hero-badge-dot"></span>
+            Postman CSE
+        </div>
+        <h1 class="fade-in">
+            Engineering<br>
+            <span class="gradient-text">customer success</span><br>
+            at API scale.
+        </h1>
+        <p class="fade-in">
+            We build the tools, integrations, and technical solutions that help
+            Postman's enterprise customers ship better APIs faster. From governance
+            automation to custom workflows, we turn complex requirements into
+            working software.
+        </p>
+        <div class="hero-actions fade-in">
+            <a href="https://github.com/postman-cs" class="btn btn-gradient" target="_blank" rel="noopener">
+                Explore Our Work
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10m0 0L9 4m4 4L9 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </a>
+            <a href="#what-we-do" class="btn btn-ghost">
+                Learn More
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- What We Do -->
+<section class="section section-dark" id="what-we-do">
+    <div class="section-inner">
+        <div class="section-label fade-in">What We Do</div>
+        <h2 class="section-title fade-in">Accelerating enterprise API adoption</h2>
+        <p class="section-desc fade-in">
+            Customer Success Engineering bridges the gap between Postman's platform
+            and the unique challenges of large-scale API programs.
+        </p>
+        <div class="cards">
+            <div class="card fade-in">
+                <div class="card-icon card-icon-orange">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20V10"/><path d="M18 20V4"/><path d="M6 20v-4"/></svg>
+                </div>
+                <h3>API Governance</h3>
+                <p>Automated governance workflows, custom linting rules, and compliance frameworks that scale across thousands of APIs and hundreds of teams.</p>
+            </div>
+            <div class="card fade-in">
+                <div class="card-icon card-icon-purple">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12 1v6m0 6v6m-7-3.46 5.2-3m1.6-.93 5.2-3M1.5 16.46l5.2-3m1.6-.93 5.2-3"/></svg>
+                </div>
+                <h3>Integrations & Automation</h3>
+                <p>CI/CD pipeline integrations, gateway syncs, and workflow automations that embed Postman into existing developer toolchains seamlessly.</p>
+            </div>
+            <div class="card fade-in">
+                <div class="card-icon card-icon-orange">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 002 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0022 16z"/><polyline points="7.5 4.21 12 6.81 16.5 4.21"/><polyline points="7.5 19.79 7.5 14.6 3 12"/><polyline points="21 12 16.5 14.6 16.5 19.79"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>
+                </div>
+                <h3>Custom Solutions</h3>
+                <p>Purpose-built tools and reference architectures for enterprise-specific needs: from spec ingestion pipelines to observability dashboards and beyond.</p>
+            </div>
+            <div class="card fade-in">
+                <div class="card-icon card-icon-purple">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 014 4v14a3 3 0 00-3-3H2z"/><path d="M22 3h-6a4 4 0 00-4 4v14a3 3 0 013-3h7z"/></svg>
+                </div>
+                <h3>Technical Enablement</h3>
+                <p>Workshops, proof-of-concept builds, and deep technical guidance that help customer engineering teams adopt API-first practices with confidence.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Stats -->
+<section class="section section-stats">
+    <div class="section-inner">
+        <div class="stats fade-in">
+            <div class="stat">
+                <div class="stat-value">50+</div>
+                <div class="stat-label">Enterprise customers enabled</div>
+            </div>
+            <div class="stat">
+                <div class="stat-value">200+</div>
+                <div class="stat-label">Custom integrations delivered</div>
+            </div>
+            <div class="stat">
+                <div class="stat-value">30k+</div>
+                <div class="stat-label">APIs under governance</div>
+            </div>
+            <div class="stat">
+                <div class="stat-value">98%</div>
+                <div class="stat-label">Customer satisfaction</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Projects / Tools -->
+<section class="section section-tools" id="projects">
+    <div class="section-inner">
+        <div class="section-label fade-in">Projects</div>
+        <h2 class="section-title fade-in">Open-source tools and solutions</h2>
+        <p class="section-desc fade-in">
+            Solutions built for real customer challenges, shared for the community.
+        </p>
+        <div class="tools-grid">
+            <div class="tool-card fade-in">
+                <span class="tool-card-tag">governance</span>
+                <h3>Governance Automation</h3>
+                <p>Automated API governance pipelines with custom spectral rules, collection-level enforcement, and reporting dashboards.</p>
+                <a href="https://github.com/postman-cs/governance-automation" class="tool-card-link" target="_blank" rel="noopener">
+                    View on GitHub
+                    <svg viewBox="0 0 16 16" fill="none"><path d="M3 8h10m0 0L9 4m4 4L9 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </a>
+            </div>
+            <div class="tool-card fade-in">
+                <span class="tool-card-tag">intelligence</span>
+                <h3>Kepler</h3>
+                <p>Customer intelligence platform that surfaces insights from support interactions, usage patterns, and engagement data.</p>
+                <a href="https://github.com/postman-cs/kepler" class="tool-card-link" target="_blank" rel="noopener">
+                    View on GitHub
+                    <svg viewBox="0 0 16 16" fill="none"><path d="M3 8h10m0 0L9 4m4 4L9 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </a>
+            </div>
+            <div class="tool-card fade-in">
+                <span class="tool-card-tag">scaffolding</span>
+                <h3>Postman Scaffolding</h3>
+                <p>Bootstrap enterprise Postman deployments with pre-configured workspaces, collections, environments, and governance policies.</p>
+                <a href="https://github.com/postman-cs/postman-scaffolding" class="tool-card-link" target="_blank" rel="noopener">
+                    View on GitHub
+                    <svg viewBox="0 0 16 16" fill="none"><path d="M3 8h10m0 0L9 4m4 4L9 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </a>
+            </div>
+            <div class="tool-card fade-in">
+                <span class="tool-card-tag">ci/cd</span>
+                <h3>Postman CI Demo</h3>
+                <p>Reference implementation for integrating Postman collection runs into CI/CD pipelines with GitHub Actions and automated reporting.</p>
+                <a href="https://github.com/postman-cs/postman-ci-demo" class="tool-card-link" target="_blank" rel="noopener">
+                    View on GitHub
+                    <svg viewBox="0 0 16 16" fill="none"><path d="M3 8h10m0 0L9 4m4 4L9 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CTA -->
+<section class="cta">
+    <div class="cta-inner fade-in">
+        <h2>Ready to scale your API program?</h2>
+        <p>
+            Whether you need governance automation, CI/CD integration, or custom
+            tooling, our engineering team is here to help.
+        </p>
+        <div class="cta-actions">
+            <a href="https://github.com/postman-cs" class="btn btn-gradient" target="_blank" rel="noopener">
+                Get Started
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10m0 0L9 4m4 4L9 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </a>
+            <a href="mailto:jared.boynton@postman.com" class="btn btn-ghost">
+                Contact Us
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- Footer -->
+<footer class="footer">
+    <div class="footer-inner">
+        <div class="footer-left">
+            <a href="/" class="footer-logo">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="none">
+                    <path d="M182.1 73.9L141.4 114.6L155.5 128.7L210.5 73.7L182.1 73.9Z" fill="#FF6C37"/>
+                    <path d="M141.1 115L108.1 82L98.5 91.6L128 121.1L141.1 115Z" fill="white"/>
+                    <path d="M128 121.4L97.5 92.3L63.8 126L91.8 153.9L128 121.4Z" fill="white"/>
+                    <path d="M91.2 154.6L62.6 126L45.5 143.1L73.7 171.3L91.2 154.6Z" fill="white"/>
+                    <path d="M73.1 171.9L44.8 143.7L32.5 156L60.7 184.2L73.1 171.9Z" fill="white"/>
+                    <path d="M182.4 73.5L128.1 0L108.4 81.6L182.4 73.5Z" fill="white"/>
+                    <path d="M210.9 73.3L256 0L182.8 73.5L210.9 73.3Z" fill="#FF6C37"/>
+                    <path d="M155.8 129.1L180.4 153.7L256 0L210.8 73.7L155.8 129.1Z" fill="white"/>
+                    <path d="M180 154.4L155.4 129.8L128 256L180 154.4Z" fill="#FF6C37"/>
+                </svg>
+            </a>
+            <span class="footer-text">Postman Customer Success Engineering</span>
+        </div>
+        <div class="footer-links">
+            <a href="https://github.com/postman-cs" class="footer-link" target="_blank" rel="noopener">GitHub</a>
+            <a href="https://www.postman.com" class="footer-link" target="_blank" rel="noopener">postman.com</a>
+            <a href="mailto:jared.boynton@postman.com" class="footer-link">Contact</a>
+        </div>
+    </div>
+</footer>
+
+<script>
+    // Intersection Observer for fade-in animations
+    if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+        document.querySelectorAll('.fade-in').forEach((el) => observer.observe(el));
+    } else {
+        document.querySelectorAll('.fade-in').forEach((el) => el.classList.add('visible'));
+    }
+</script>
+
 </body>
 </html>
